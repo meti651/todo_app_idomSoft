@@ -29,7 +29,11 @@ module.exports = (host, port) => {
         bodyParser.urlencoded({ extended: true }), // Parse application/x-www-form-urlencoded
         bodyParser.json() // Parse application/json
     );
-    router.use("/", swaggerUi.serve, swaggerUi.setup(swaggerJsDoc));
+    router.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerJsDoc));
+
+    router.get("/", function (req, res) {
+        res.status(200).send("If you want to learn about the API, go to the <a href='/docs'>docs</a>");
+    })
 
     /**
      * @openapi
@@ -61,14 +65,7 @@ module.exports = (host, port) => {
      *           description: A boolean wheter the todo is done or not
      */
     router.get("/api/todos", function (req, res) {
-        let todos = [
-            {
-                id: 1,
-                todo: "Buy pizza",
-                date: Date.now(),
-                done: false,
-            }
-        ];
+        let todos = [];
         res.status(200).json(todos);
     });
 
@@ -197,7 +194,7 @@ module.exports = (host, port) => {
      * /api/todos/{todoId}:
      *  delete:
      *   summary: Todo torlese
-     *   description: Törli a todo objektumot az urlben megadott todoId alapján
+     *   description: Törli a todo objektumot az urlben megadott todoId alapján. Visszaadja a törölt todo objektumot.
      *   parameters:
      *      - name: todoId
      *        in: path
