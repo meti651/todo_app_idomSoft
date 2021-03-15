@@ -19,7 +19,8 @@ module.exports = {
     extensions: ['*', '.vue', '.js'],
     modules: ['node_modules'],
     alias: {
-      'assets': path.join(__dirname, 'src', 'assets')
+        vue: 'vue/dist/vue.js',
+        'assets': path.join(__dirname, 'src', 'assets'),
     }
   },
   devtool: '#source-maps',
@@ -45,13 +46,17 @@ module.exports = {
         test: /\.scss$/,
         use: [
           {
-            loader: 'style-loader'
+            loader: 'style-loader',
           },
           {
-            loader: 'css-loader'
+            loader: 'css-loader',
+            options: {
+                modules: true,
+                localIdentName: "[local]_[hash:base64:8]"
+            }
           },
           {
-            loader: 'sass-loader'
+            loader: 'sass-loader',
           }
         ]
       },
