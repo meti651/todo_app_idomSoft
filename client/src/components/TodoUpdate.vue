@@ -2,24 +2,23 @@
     <md-dialog :md-active.sync="showUpdate">
         <md-dialog-title>Update Todo, ID: {{todo.id}}</md-dialog-title>
 
-        <form @submit.prevent="clickHandle">
-            <md-card class="md-layout-item md-size-50 md-small-size-100">
+        <form @submit.prevent="updateTodo" class="md-layout">
+            <md-card class="md-layout-item">
                 <md-card-content>
-                    <div class="md-layout md-gutter">
-                        <div class="md-layout-item md-small-size-100">
-                            <md-field>
-                                <label for="description">Description</label>
-                                <md-input name="description" v-model="description"/>
-                            </md-field>
-                        </div>
-                        <div class="md-layout-item md-small-size-100">
-                            <md-field>
-                                <md-icon>event</md-icon>
-                                <label>Time</label>
-                                <md-input v-model="time"></md-input>
-                            </md-field>
-                        </div>
-                    </div>
+                    <md-field>
+                        <label for="description">Description</label>
+                        <md-textarea name="description" v-model="description"/>
+                    </md-field>
+                    <md-field>
+                        <md-icon>event</md-icon>
+                        <label for="time">Time</label>
+                        <md-input name="time" ref="timePickerInput" autocomplete="off" @focus="pickTime" v-model="time"/>
+                        <vue-clock-picker v-model="time" ref="clockPicker" @timeset="setTime"></vue-clock-picker>
+                    </md-field>
+                    <md-card-actions>
+                        <md-button class="md-accent" @click="closeModal">Cancel</md-button>
+                        <md-button type="submit" class="md-accent">Update</md-button>
+                    </md-card-actions>
                 </md-card-content>
             </md-card>
         </form>
@@ -42,12 +41,34 @@ export default {
         description: ''
     }),
     methods: {
-        clickHandle(e) {
+        closeModal() {
             this.$emit('setShowUpdate', false)
         },
+        pickTime() {
+            const timePicker = this.$refs.clockPicker;
+
+            timePicker.open();
+        },
+        setTime(time){
+            this.time = time;
+        },
+        updateTodo(){
+            this.closeModal();
+        }
     }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.clock-picker__input{
+    display: none;
+}
+.md-dialog-container{
+    min-height: 500px;
+    min-width: 330px;
+
+    .md-textarea{
+        height: 400px;
+    }
+}
 </style>
