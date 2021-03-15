@@ -1,0 +1,21 @@
+@use "config";
+@import "~vue-material/dist/theme/engine"; // Import the theme engine
+
+@include md-register-theme(
+  "default",
+  (
+    primary: md-get-palette-color(red, A200),
+    // The primary color of your application
+      accent: md-get-palette-color(indigo, A200) // The accent or secondary color,,,,,,,,,,,,,,,,,,,,,,,
+  )
+);
+
+@import "~vue-material/dist/theme/all"; // Apply the theme
+@import url("https://fonts.googleapis.com/css?family=Material+Icons");
+
+body {
+  display: grid;
+  place-items: center;
+  background: linear-gradient(200deg, $accent-color 50%, $primary-color 50.1%);
+  font-size: 16px;
+}
