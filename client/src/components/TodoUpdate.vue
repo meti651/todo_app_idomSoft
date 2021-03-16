@@ -1,5 +1,5 @@
 <template>
-    <md-dialog :md-active.sync="showUpdate" :md-click-outside-to-close="false" :md-close-on-esc="false">
+    <md-dialog :md-active.sync="isModalShown" :md-click-outside-to-close="false" :md-close-on-esc="false">
         <md-dialog-title v-if="todo">Update Todo, ID: <strong>{{todo.id}}</strong></md-dialog-title>
         <md-dialog-title v-else>Create Todo</md-dialog-title>
 
@@ -32,7 +32,7 @@
 export default {
     name: "TodoUpdate",
     props: {
-        showUpdate: Boolean,
+        isModalShown: Boolean,
         todo: Object
     },
     data() {
@@ -43,7 +43,7 @@ export default {
     },
     methods: {
         closeModal() {
-            this.$emit('setShowUpdate', false)
+            this.$emit('closeModal', false)
         },
         pickTime() {
             const timePicker = this.$refs.clockPicker;

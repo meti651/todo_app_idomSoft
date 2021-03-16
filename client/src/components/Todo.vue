@@ -16,7 +16,7 @@
             </md-menu-content>
         </md-menu>
 
-        <TodoUpdate :showUpdate="showUpdate" :todo="todo" @setShowUpdate="setShowUpdate" @updateTodo="updateTodo"/>
+        <TodoUpdate :isModalShown="showUpdate" :todo="todo" @closeModal="setShowUpdate" @updateTodo="updateTodo"/>
     </div>
 </template>
 

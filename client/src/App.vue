@@ -1,10 +1,10 @@
 <template>
-    <DatedCard :todos="todos" @showModal="setShowModal">
+    <DatedCard :todos="todos" @showModal="showModal">
+        <template #newCardModal>
+            <TodoUpdate :showUpdate="isModalShown" :todo="null" @setShowUpdate="setShowModal" @updateTodo="updateTodo" />
+        </template>
         <template #children>
             <TodoList :todos="todos" @updateTodo="updateTodo" @deleteTodo="deleteTodo"/>
-        </template>
-        <template #newCardModal>
-            <TodoUpdate :showUpdate="showModal" :todo="null" @setShowUpdate="setShowModal" @updateTodo="updateTodo" />
         </template>
     </DatedCard>
 </template>
@@ -23,7 +23,7 @@ export default {
     },
     data: () => ({
         todos: [],
-        showModal: false
+        isModalShown: false
     }),
     methods: {
         updateTodo(todo) {
@@ -39,7 +39,7 @@ export default {
         deleteTodo(todoId) {
             this.todos = this.todos.filter(item => item.id !== todoId);
         },
-        setShowModal(show) {
+        showModal(show) {
             this.showModal = show;
         }
     },
