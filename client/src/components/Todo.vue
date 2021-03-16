@@ -10,9 +10,9 @@
         <md-menu :mdCloseOnClick="true" ref="contextMenu">
             <md-button md-menu-trigger ref="trigger"></md-button>
 
-            <md-menu-content >
-                <md-menu-item><md-button @click="setShowUpdate(true)">Uppdate</md-button></md-menu-item>
-                <md-menu-item><md-button>Delete</md-button></md-menu-item>
+            <md-menu-content class="options">
+                <md-button @click="setShowUpdate(true)">Update</md-button>
+                <md-button>Delete</md-button>
             </md-menu-content>
         </md-menu>
 
@@ -72,6 +72,11 @@ export default {
 
         .md-button{
             display: none;
+        }
+    }
+    .options{
+        .md-button{
+            margin-left: 8px;
         }
     }
 </style>
