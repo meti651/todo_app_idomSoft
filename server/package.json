@@ -13,6 +13,7 @@
     "server-destroy": "^1.0.1"
   },
   "devDependencies": {
+    "cors": "^2.8.5",
     "swagger-ui-express": "^4.1.6"
   },
   "author": "Idomsoft Zrt. <hr@idomsoft.hu>",
