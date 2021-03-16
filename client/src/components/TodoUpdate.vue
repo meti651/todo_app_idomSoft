@@ -1,6 +1,6 @@
 <template>
     <md-dialog :md-active.sync="isModalShown" :md-click-outside-to-close="false" :md-close-on-esc="false">
-        <md-dialog-title v-if="todo">Update Todo, ID: <strong>{{todo.id}}</strong></md-dialog-title>
+        <md-dialog-title v-if="todo" >Update Todo, ID: <strong>{{todo.id}}</strong></md-dialog-title>
         <md-dialog-title v-else>Create Todo</md-dialog-title>
 
         <form @submit.prevent="updateTodo" class="md-layout">
@@ -13,8 +13,8 @@
                     <md-field>
                         <md-icon>event</md-icon>
                         <label for="time">Time</label>
-                        <md-input name="time" ref="timePickerInput" autocomplete="off" @focus="pickTime" v-model="time"/>
-                        <vue-clock-picker v-model="time" ref="clockPicker" @timeset="setTime"></vue-clock-picker>
+                        <md-input name="time" ref="timePickerInput" autocomplete="off" @focus="pickTime" v-model="time" class="md-accent"/>
+                        <vue-clock-picker v-model="time" ref="clockPicker" @timeset="setTime" active-color="#e57373"></vue-clock-picker>
                     </md-field>
                     <md-card-actions>
                         <md-button class="md-accent" @click="closeModal">Cancel</md-button>
