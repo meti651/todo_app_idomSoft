@@ -1,5 +1,5 @@
 <template>
-    <md-dialog :md-active.sync="showUpdate">
+    <md-dialog :md-active.sync="showUpdate" :md-click-outside-to-close="false" :md-close-on-esc="false">
         <md-dialog-title>Update Todo, ID: {{todo.id}}</md-dialog-title>
 
         <form @submit.prevent="updateTodo" class="md-layout">
@@ -33,13 +33,12 @@ export default {
         showUpdate: Boolean,
         todo: Object
     },
-    components: {
-        
+    data() {
+        return {
+        time: this.todo.time || '00:00',
+        description: this.todo.description || '',
+        }
     },
-    data: () => ({
-        time: '',
-        description: ''
-    }),
     methods: {
         closeModal() {
             this.$emit('setShowUpdate', false)
@@ -54,6 +53,7 @@ export default {
         },
         updateTodo(){
             this.closeModal();
+            this.$emit("updateTodo", {description: this.description, time: this.time})
         }
     }
 }
