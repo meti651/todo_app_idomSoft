@@ -4,6 +4,7 @@ const path = require("path");
 const history = require("connect-history-api-fallback");
 const swaggerUi = require("swagger-ui-express");
 const swaggerJsdoc = require("swagger-jsdoc");
+const cors = require('cors')
 
 const options = {
     definition: {
@@ -17,10 +18,11 @@ const options = {
 };
 
 const swaggerJsDoc = swaggerJsdoc(options);
+let todos = [];
 
 module.exports = (host, port) => {
-    const todos = [];
     const app = express();
+    app.use(cors());
 
     const router = new express.Router();
     app.use("/", router);
@@ -44,7 +46,7 @@ module.exports = (host, port) => {
      *   description: Visszaad egy listat todo objektumokkal.
      *   responses:
      *    200:
-     *     description: Returns an array of todo objects
+     *     description: OK
      *     content:
      *      application/json:
      *       schema:
@@ -85,7 +87,7 @@ module.exports = (host, port) => {
      *          format: int64
      *   responses:
      *    200:
-     *     description: Returns a todo objects
+     *     description: OK
      *     content:
      *      application/json:
      *          schema:
@@ -103,10 +105,13 @@ module.exports = (host, port) => {
      *                  isDone:
      *                      type: boolean
      *                      description: A boolean wheter the todo is done or not
+     *    400:
+     *      description: Bad request. There is no todo with the requested ID
      */
     router.get("/api/todos/:todoId", function (req, res) {
-        let todo = todos.filter(todo => todo.id === req.params.todoId).shift();
-        res.status(200).json(todo);
+        const todo = todos.filter(todo => todo.id === req.params.todoId).shift();
+        if(!todo) res.status(400).send(`There is no todo with the id: ${req.params.todoId}`);
+        else res.status(200).json(todo);
     });
 
     /**
@@ -131,9 +136,6 @@ module.exports = (host, port) => {
      *              schema:
      *                  type: object
      *                  properties:
-     *                      todo:
-     *                          type: object
-     *                          properties:
      *                            id:
      *                                type: integer
      *                                description: The todo ID
@@ -148,7 +150,7 @@ module.exports = (host, port) => {
      *                                description: A boolean wheter the todo is done or not
      *   responses:
      *    200:
-     *     description: Returns a todo objects
+     *     description: OK
      *     content:
      *      application/json:
      *          schema:
@@ -166,9 +168,17 @@ module.exports = (host, port) => {
      *                  isDone:
      *                      type: boolean
      *                      description: A boolean wheter the todo is done or not
+     *    400:
+     *      description: Bad request. There is already a todo with the requested ID.
      */
     router.post("/api/todos/:todoId", function (req, res) {
-        let todo = {...req.body.todo};
+        let todo = todos.filter(todo => todo.id === req.params.todoId).shift();
+        if(todo) {
+            res.status(400).send(`There is already a todo with the id: ${todo.id}`)
+            return;
+        }
+        todo = {...req.body};
+        todos.push(todo);
         res.status(201).json(todo);
     });
 
@@ -206,10 +216,18 @@ module.exports = (host, port) => {
      *                  isDone:
      *                      type: boolean
      *                      description: A boolean wheter the todo is done or not
+     *    400:
+     *      description: Bad request. There is no todo with the requested ID.
      */
     router.patch("/api/todos/:todoId", function (req, res) {
         let todo = todos.filter(todo => todo.id === req.params.todoId).shift();
-        todo = {...req.body.todo};
+        if(!todo) {
+            res.status(400).send(`There is no todo with the id: ${req.params.todoId}`);
+            return;
+        }
+        todo.description = req.body.description;
+        todo.time = req.body.time;
+        todo.isDone = req.body.isDone;
         res.status(200).json(todo);
     });
 
@@ -247,9 +265,15 @@ module.exports = (host, port) => {
      *                  isDone:
      *                      type: boolean
      *                      description: A boolean wheter the todo is done or not
+     *     400:
+     *      description: Bad request. There is no todo with the requested ID.
      */
     router.delete("/api/todos/:todoId", function (req, res) {
         let todo = todos.filter(todo => todo.id === req.params.todoId).shift();
+        if(!todo){
+            res.status(400).send(`There is no todo with the id: ${req.params.todoId}`);
+            return;
+        }
         todos = todos.filter(todo => todo.id !== req.params.todoId);
         res.status(202).json(todo);
     });
