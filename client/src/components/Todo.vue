@@ -26,7 +26,12 @@ import TodoUpdate from "./TodoUpdate"
 export default {
     name: "Todo",
     props: {
-        todo: Object,
+        todo: {
+            id: Number,
+            isDone: Boolean,
+            description: String,
+            time: String
+        },
     },
     components: {
         TodoUpdate
