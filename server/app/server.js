@@ -19,6 +19,7 @@ const options = {
 const swaggerJsDoc = swaggerJsdoc(options);
 
 module.exports = (host, port) => {
+    const todos = [];
     const app = express();
 
     const router = new express.Router();
@@ -54,18 +55,17 @@ module.exports = (host, port) => {
      *          id:
      *           type: integer
      *           description: The todo ID
-     *          todo:
+     *          description:
      *           type: string
      *           description: The todo's description
-     *          date:
+     *          time:
      *           type: string
      *           description: The date the todo will happen
-     *          done:
+     *          isDone:
      *           type: boolean
      *           description: A boolean wheter the todo is done or not
      */
     router.get("/api/todos", function (req, res) {
-        let todos = [];
         res.status(200).json(todos);
     });
 
@@ -94,18 +94,18 @@ module.exports = (host, port) => {
      *                  id:
      *                      type: integer
      *                      description: The todo ID
-     *                  todo:
+     *                  description:
      *                      type: string
      *                      description: The todo's description
-     *                  date:
+     *                  time:
      *                      type: string
      *                      description: The date the todo will happen
-     *                  done:
+     *                  isDone:
      *                      type: boolean
      *                      description: A boolean wheter the todo is done or not
      */
     router.get("/api/todos/:todoId", function (req, res) {
-        let todo = {};
+        let todo = todos.filter(todo => todo.id === req.params.todoId).shift();
         res.status(200).json(todo);
     });
 
@@ -123,6 +123,29 @@ module.exports = (host, port) => {
      *        schema:
      *          type: integer
      *          format: int64
+     *   requestBody:
+     *      description: The todo object that is added to the list of todos.
+     *      required: true
+     *      content:
+     *          application/json:
+     *              schema:
+     *                  type: object
+     *                  properties:
+     *                      todo:
+     *                          type: object
+     *                          properties:
+     *                            id:
+     *                                type: integer
+     *                                description: The todo ID
+     *                            description:
+     *                                type: string
+     *                                description: The todo's description
+     *                            time:
+     *                                type: string
+     *                                description: The date the todo will happen
+     *                            isDone:
+     *                                type: boolean
+     *                                description: A boolean wheter the todo is done or not
      *   responses:
      *    200:
      *     description: Returns a todo objects
@@ -134,18 +157,18 @@ module.exports = (host, port) => {
      *                  id:
      *                      type: integer
      *                      description: The todo ID
-     *                  todo:
+     *                  description:
      *                      type: string
      *                      description: The todo's description
-     *                  date:
+     *                  time:
      *                      type: string
      *                      description: The date the todo will happen
-     *                  done:
+     *                  isDone:
      *                      type: boolean
      *                      description: A boolean wheter the todo is done or not
      */
     router.post("/api/todos/:todoId", function (req, res) {
-        let todo = {};
+        let todo = {...req.body.todo};
         res.status(201).json(todo);
     });
 
@@ -174,18 +197,19 @@ module.exports = (host, port) => {
      *                  id:
      *                      type: integer
      *                      description: The todo ID
-     *                  todo:
+     *                  description:
      *                      type: string
      *                      description: The todo's description
-     *                  date:
+     *                  time:
      *                      type: string
      *                      description: The date the todo will happen
-     *                  done:
+     *                  isDone:
      *                      type: boolean
      *                      description: A boolean wheter the todo is done or not
      */
     router.patch("/api/todos/:todoId", function (req, res) {
-        let todo = {};
+        let todo = todos.filter(todo => todo.id === req.params.todoId).shift();
+        todo = {...req.body.todo};
         res.status(200).json(todo);
     });
 
@@ -214,18 +238,19 @@ module.exports = (host, port) => {
      *                  id:
      *                      type: integer
      *                      description: The todo ID
-     *                  todo:
+     *                  description:
      *                      type: string
      *                      description: The todo's description
-     *                  date:
+     *                  time:
      *                      type: string
      *                      description: The date the todo will happen
-     *                  done:
+     *                  isDone:
      *                      type: boolean
      *                      description: A boolean wheter the todo is done or not
      */
     router.delete("/api/todos/:todoId", function (req, res) {
-        let todo = {};
+        let todo = todos.filter(todo => todo.id === req.params.todoId).shift();
+        todos = todos.filter(todo => todo.id !== req.params.todoId);
         res.status(202).json(todo);
     });
 
