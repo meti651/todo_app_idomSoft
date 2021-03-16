@@ -37,8 +37,8 @@ export default {
     },
     data() {
         return {
-        time: this.todo ? this.todo.time : '00:00',
-        description: this.todo ? this.todo.description : '',
+            time: this.todo ? this.todo.time : '00:00',
+            description: this.todo ? this.todo.description : '',
         }
     },
     methods: {
