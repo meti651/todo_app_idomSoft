@@ -8,7 +8,7 @@
                 <md-card-content>
                     <md-field>
                         <label for="description">Description</label>
-                        <md-textarea name="description" v-model="description"/>
+                        <md-textarea name="description" v-model="description" required/>
                     </md-field>
                     <md-field>
                         <md-icon>event</md-icon>
