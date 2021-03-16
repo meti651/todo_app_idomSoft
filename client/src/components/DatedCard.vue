@@ -9,11 +9,13 @@
                 <md-subheader>{{todos.length}} Tasks</md-subheader>
             </md-card-header>
 
-            <md-card-actions @click="addNewTodo">
-                <md-button class="md-icon-button md-raised md-primary">
+            <md-card-actions >
+                <md-button class="md-icon-button md-raised md-primary" @click="showModal">
                     <md-icon class="md-default">add</md-icon>
                 </md-button>
             </md-card-actions>
+
+            <slot name="newCardModal"></slot>
 
             <md-divider/>
 
@@ -34,7 +36,7 @@
             todos: Array
         },
         data: () => ({
-            dateObject: new Date()
+            dateObject: new Date(),
         }),
         computed: {
             day() {
@@ -70,7 +72,9 @@
             }
         },
         methods: {
-            addNewTodo() {}
+            showModal() {
+                this.$emit("showModal", true)
+            }
         }
     }
 </script>

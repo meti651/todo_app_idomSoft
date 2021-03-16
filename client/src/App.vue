@@ -1,7 +1,10 @@
 <template>
-    <DatedCard :todos="todos">
+    <DatedCard :todos="todos" @showModal="setShowModal">
         <template #children>
             <TodoList :todos="todos" @updateTodo="updateTodo" @deleteTodo="deleteTodo"/>
+        </template>
+        <template #newCardModal>
+            <TodoUpdate :showUpdate="showModal" :todo="null" @setShowUpdate="setShowModal" @updateTodo="updateTodo" />
         </template>
     </DatedCard>
 </template>
@@ -20,16 +23,24 @@ export default {
     },
     data: () => ({
         todos: [],
+        showModal: false
     }),
     methods: {
         updateTodo(todo) {
-            const oldTodo = this.todos.filter(item => item.id === todo.id).shift();
+            let oldTodo = this.todos.filter(item => item.id === todo.id).shift();
+            if(!oldTodo) {
+                oldTodo = { id: this.todos.length + 1 }
+                this.todos.push(oldTodo);
+            }
             oldTodo.description = todo.description;
             oldTodo.time = todo.time;
             oldTodo.isDone = todo.isDone;
         },
         deleteTodo(todoId) {
             this.todos = this.todos.filter(item => item.id !== todoId);
+        },
+        setShowModal(show) {
+            this.showModal = show;
         }
     },
     mounted() {

@@ -1,6 +1,7 @@
 <template>
     <md-dialog :md-active.sync="showUpdate" :md-click-outside-to-close="false" :md-close-on-esc="false">
-        <md-dialog-title>Update Todo, ID: {{todo.id}}</md-dialog-title>
+        <md-dialog-title v-if="todo">Update Todo, ID: <strong>{{todo.id}}</strong></md-dialog-title>
+        <md-dialog-title v-else>Create Todo</md-dialog-title>
 
         <form @submit.prevent="updateTodo" class="md-layout">
             <md-card class="md-layout-item">
@@ -17,7 +18,8 @@
                     </md-field>
                     <md-card-actions>
                         <md-button class="md-accent" @click="closeModal">Cancel</md-button>
-                        <md-button type="submit" class="md-accent">Update</md-button>
+                        <md-button type="submit" class="md-accent" v-if="todo">Update</md-button>
+                        <md-button type="submit" class="md-accent" v-else>Create</md-button>
                     </md-card-actions>
                 </md-card-content>
             </md-card>
@@ -35,8 +37,8 @@ export default {
     },
     data() {
         return {
-        time: this.todo.time || '00:00',
-        description: this.todo.description || '',
+        time: this.todo ? this.todo.time : '00:00',
+        description: this.todo ? this.todo.description : '',
         }
     },
     methods: {
