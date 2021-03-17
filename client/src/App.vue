@@ -34,7 +34,7 @@ export default {
         async updateTodo(todo) {
             let oldTodo = this.todos.filter(item => todo.id == item.id).shift();
             if(!oldTodo) {
-                oldTodo = { id: uuidv4() , ...todo}
+                oldTodo = { id: uuidv4() , ...todo, isDone: false}
                 await dataFetch.createTodo(oldTodo);
             }else{
                 oldTodo = {...todo}
