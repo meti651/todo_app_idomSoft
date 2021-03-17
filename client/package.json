@@ -1,16 +1,24 @@
 {
   "name": "idomsoft-test-client",
   "description": "Test alkalmazas kliens csomag",
-  "main": "src/main.js",
+  "author": "Idomsoft Zrt. <hr@idomsoft.hu>",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "start": "npm run serve",
     "build": "vue-cli-service build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test:unit": "vue-cli-service test:unit",
+    "start": "npm run serve",
+    "test": "vue-cli-service test:unit"
+  },
+  "main": "src/main.js",
+  "dependencies": {
+    "vue": "^2.6.12"
   },
   "devDependencies": {
     "@pencilpix/vue2-clock-picker": "^0.1.6",
+    "@vue/cli-plugin-unit-jest": "^4.5.11",
     "@vue/cli-service": "^4.5.11",
+    "@vue/test-utils": "^1.0.3",
+    "axios": "^0.21.1",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-runtime": "^6.23.0",
@@ -21,7 +29,9 @@
     "cache-loader": "^4.1.0",
     "css-loader": "^5.1.1",
     "extract-text-webpack-plugin": "^1.0.1",
+    "flush-promises": "^1.0.2",
     "html-webpack-plugin": "^5.3.1",
+    "jest": "^24.9.0",
     "node-sass": "^4.7.2",
     "sass-loader": "^8.0.2",
     "style-loader": "^0.20.1",
@@ -30,9 +40,5 @@
     "vue-template-compiler": "^2.6.12",
     "webpack": "^4.46.0"
   },
-  "author": "Idomsoft Zrt. <hr@idomsoft.hu>",
-  "license": "ISC",
-  "dependencies": {
-    "vue": "^2.6.12"
-  }
+  "license": "ISC"
 }
