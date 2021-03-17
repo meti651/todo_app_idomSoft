@@ -1,6 +1,8 @@
+import axios from "axios";
+
 const dataFetch = {
     async dataFetch(url, options = {}) {
-        const res = await fetch(url, options);
+        const res = await axios(url, options);
 
         if(!res.ok) {
             const message = ```
