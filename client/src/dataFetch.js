@@ -4,11 +4,11 @@ const dataFetch = {
     async dataFetch(url, options = {}) {
         const res = await axios(url, options);
 
-        if(!res.ok) {
+        if (!res.ok) {
             const message = ```
                 An error has occured: ${res.status}
                 ${res.text}
-                ```
+                ```;
             throw new Error(message);
         }
 
@@ -16,18 +16,18 @@ const dataFetch = {
         return data;
     },
     getAllTodos() {
-         return this.dataFetch(dataUrls.base, {
+        return this.dataFetch(dataUrls.base, {
             method: "GET",
             mode: "cors",
-            cache: "no-cache"
-        })
+            cache: "no-cache",
+        });
     },
     getTodo(todoId) {
         return this.dataFetch(dataUrls.withId(todoId), {
             method: "GET",
             mode: "cors",
-            cache: "no-cache"
-        })
+            cache: "no-cache",
+        });
     },
     createTodo(todo) {
         return this.dataFetch(dataUrls.withId(todo.id), {
@@ -35,10 +35,10 @@ const dataFetch = {
             mode: "cors",
             cache: "no-cache",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
             },
-            body: JSON.stringify(todo)
-        })
+            body: JSON.stringify(todo),
+        });
     },
     updateTodo(todo) {
         return this.dataFetch(dataUrls.withId(todo.id), {
@@ -46,25 +46,25 @@ const dataFetch = {
             mode: "cors",
             cache: "no-cache",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
             },
-            body: JSON.stringify(todo)
-        })
+            body: JSON.stringify(todo),
+        });
     },
     deleteTodo(todoId) {
         return this.dataFetch(dataUrls.withId(todoId), {
             method: "DELETE",
             mode: "cors",
-            cache: "no-cache"
-        })
-    } 
-}
+            cache: "no-cache",
+        });
+    },
+};
 
 const dataUrls = {
     base: "http://localhost:8080/api/todos/",
     withId(todoId) {
-        return this.base + todoId
-    } 
-}
+        return this.base + todoId;
+    },
+};
 
 export default dataFetch;

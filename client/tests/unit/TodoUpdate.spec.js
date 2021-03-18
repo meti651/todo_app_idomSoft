@@ -16,7 +16,7 @@ const dummyData = {
     isDone: false,
 };
 
-config.mocks["open"] = () => {}
+config.mocks["open"] = () => {};
 
 describe("TodoUpdate.vue ", () => {
     let wrapper;
@@ -51,12 +51,22 @@ describe("TodoUpdate.vue ", () => {
     });
 
     test("renders Create button if got no todo", async () => {
-        expect(wrapper.findAllComponents({ name: "md-button" }).at(1).text()).toEqual("Update");
+        expect(
+            wrapper
+                .findAllComponents({ name: "md-button" })
+                .at(1)
+                .text()
+        ).toEqual("Update");
 
         await wrapper.setProps({ todo: null });
 
-        expect(wrapper.findAllComponents({ name: "md-button" }).at(1).text()).toEqual("Create");
-    })
+        expect(
+            wrapper
+                .findAllComponents({ name: "md-button" })
+                .at(1)
+                .text()
+        ).toEqual("Create");
+    });
 
     test("renders with initial values", async () => {
         expect(wrapper.findComponent({ name: "md-textarea" }).props().value).toEqual(dummyData.description);
@@ -76,7 +86,7 @@ describe("TodoUpdate.vue ", () => {
 
         expect(wrapper.findComponent({ name: "md-textarea" }).props().value).toEqual("Walk dog");
         expect(wrapper.findComponent({ name: "md-input" }).props().value).toEqual("11:00");
-    })
+    });
 });
 
 describe("TodoUpdate interacts well with ", () => {
@@ -100,22 +110,22 @@ describe("TodoUpdate interacts well with ", () => {
     });
 
     test("time is setting in the input", async () => {
-        expect(wrapper.findComponent({name: "md-input"}).props().value).toEqual(dummyData.time);
+        expect(wrapper.findComponent({ name: "md-input" }).props().value).toEqual(dummyData.time);
 
-        const clockPicker = wrapper.findComponent({ref: "clockPicker"});
+        const clockPicker = wrapper.findComponent({ ref: "clockPicker" });
         clockPicker.vm.$emit("timeset", "12:00");
         await wrapper.vm.$nextTick();
 
-        expect(wrapper.findComponent({name: "md-input"}).props().value).toEqual("12:00");
-    })
+        expect(wrapper.findComponent({ name: "md-input" }).props().value).toEqual("12:00");
+    });
 
     test("closing the modal", async () => {
-        const cancelButton = wrapper.findComponent({name: "md-button"});
+        const cancelButton = wrapper.findComponent({ name: "md-button" });
         cancelButton.vm.$emit("click");
         await wrapper.vm.$nextTick();
 
         expect(wrapper.emitted("closeModal")).toBeTruthy();
-    })
+    });
 
     test("submitting the update", async () => {
         const form = wrapper.find("form");
@@ -124,5 +134,5 @@ describe("TodoUpdate interacts well with ", () => {
 
         expect(wrapper.emitted("closeModal")).toBeTruthy();
         expect(wrapper.emitted("updateTodo")).toBeTruthy();
-    })
+    });
 });

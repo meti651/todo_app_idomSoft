@@ -53,10 +53,10 @@ describe("DatedCard.vue", () => {
     });
 
     test("show modal", async () => {
-        const addNewButton = wrapper.findComponent({name: "md-button"});
+        const addNewButton = wrapper.findComponent({ name: "md-button" });
         addNewButton.vm.$emit("click");
         await wrapper.vm.$nextTick();
 
         expect(wrapper.emitted("showModal")).toBeTruthy();
-    })
+    });
 });

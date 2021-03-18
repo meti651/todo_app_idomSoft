@@ -55,10 +55,10 @@ export default {
         };
     },
     watch: {
-        todo(){
+        todo() {
             this.time = this.todo ? this.todo.time : "00:00";
             this.description = this.todo ? this.todo.description : "";
-        }
+        },
     },
     methods: {
         closeModal() {
