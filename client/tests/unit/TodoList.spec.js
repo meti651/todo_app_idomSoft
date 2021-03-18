@@ -79,6 +79,7 @@ describe("TodoList.vue ", () => {
         const todoComponentContainers = wrapper.findAll(".todo-container");
 
         expect(todoComponentContainers.at(0).classes()).toContain("grayed")
+        expect(todoComponentContainers.at(1).classes()).not.toContain("grayed")
         expect(todoComponentContainers.at(2).classes()).toContain("grayed")
     })
 
@@ -114,5 +115,4 @@ describe("TodoList.vue interacts well with ", () => {
         await wrapper.vm.$nextTick();
         expect(wrapper.emitted("deleteTodo"));
     })
-
 })
