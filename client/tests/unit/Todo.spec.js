@@ -91,10 +91,27 @@ describe("TodoList.vue interacts well with ", () => {
         expect(wrapper.emitted("updateTodo")).toBeTruthy();
     })
 
-    test("close modal", async () => {
+    test("closing modal", async () => {
         const todoUpdateComponent = wrapper.findComponent(TodoUpdate);
         todoUpdateComponent.vm.$emit("closeModal", false);
         await wrapper.vm.$nextTick();
         expect(todoUpdateComponent.props().isModalShown).toBe(false)
+    })
+
+    test("deleting todo", async () => {
+        const deleteBtn = wrapper.find(".delete-btn");
+        console.log(deleteBtn.html());
+        deleteBtn.vm.$emit("click");
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.emitted("deleteTodo")).toBeTruthy();
+    })
+
+    test("opening the modal", async () => {
+        const spy = jest.spyOn(wrapper.vm, "setShowUpdate");
+        const updateBtn = wrapper.find(".update-btn");
+        updateBtn.vm.$emit("click");
+        await wrapper.vm.$nextTick();
+        expect(spy).toHaveBeenCalled();
     })
 })
