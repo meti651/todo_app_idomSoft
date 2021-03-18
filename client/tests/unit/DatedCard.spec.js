@@ -51,4 +51,12 @@ describe("DatedCard.vue", () => {
                 .includes(wrapper.props().todosLength)
         ).toBe(true);
     });
+
+    test("show modal", async () => {
+        const addNewButton = wrapper.findComponent({name: "md-button"});
+        addNewButton.vm.$emit("click");
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.emitted("showModal")).toBeTruthy();
+    })
 });
