@@ -1,10 +1,10 @@
-import { shallowMount } from "@vue/test-utils";
+import { shallowMount, createLocalVue } from "@vue/test-utils";
 import TodoList from "@/components/TodoList.vue";
 import Todo from "@/components/Todo.vue";
 
 import VueMaterial from "vue-material";
-import Vue from "vue";
-Vue.use(VueMaterial);
+const localVue = createLocalVue();
+localVue.use(VueMaterial);
 
 const dummyData = [
     {
@@ -32,6 +32,7 @@ describe("TodoList.vue ", () => {
 
     beforeEach(() => {
         wrapper = shallowMount(TodoList, {
+            localVue,
             propsData: {
                 todos: dummyData,
             },
@@ -98,6 +99,7 @@ describe("TodoList.vue interacts well with ", () => {
 
     beforeEach(() => {
         wrapper = shallowMount(TodoList, {
+            localVue,
             propsData: {
                 todos: dummyData,
             },

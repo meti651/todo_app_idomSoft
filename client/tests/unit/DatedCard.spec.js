@@ -1,15 +1,16 @@
-import { shallowMount } from "@vue/test-utils";
+import { shallowMount, createLocalVue } from "@vue/test-utils";
 import DatedCard from "@/components/DatedCard";
 
-import Vue from "vue";
 import VueMaterial from "vue-material";
-Vue.use(VueMaterial);
+const localVue = createLocalVue();
+localVue.use(VueMaterial);
 
 describe("DatedCard.vue", () => {
   let wrapper;
 
   beforeEach(() => {
     wrapper = shallowMount(DatedCard, {
+        localVue,
       propsData: {
         todosLength: 2
       },

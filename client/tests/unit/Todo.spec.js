@@ -1,10 +1,10 @@
-import { shallowMount } from "@vue/test-utils";
+import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Todo from "@/components/Todo.vue";
 import TodoUpdate from "@/components/TodoUpdate.vue";
 
 import VueMaterial from "vue-material";
-import Vue from "vue";
-Vue.use(VueMaterial);
+const localVue = createLocalVue();
+localVue.use(VueMaterial);
 
 const dummyData = {
     id: '1',
@@ -18,6 +18,7 @@ describe("Todo.vue ", () => {
 
     beforeEach(() => {
         wrapper = shallowMount(Todo, {
+            localVue,
             propsData: {
                 todo: dummyData
             },
@@ -56,10 +57,10 @@ describe("Todo.vue ", () => {
 
 describe("TodoList.vue interacts well with ", () => {
     let wrapper;
-    let deleteSpy;
 
     beforeEach(() => {
         wrapper = shallowMount(Todo, {
+            localVue,
             propsData:{
                 todo: dummyData
             }
