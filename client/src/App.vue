@@ -1,5 +1,5 @@
 <template>
-    <DatedCard :todos="todos" @showModal="setShowModal">
+    <DatedCard :todosLength="todos.length" @showModal="setShowModal">
         <template #newCardModal>
             <TodoUpdate :isModalShown="isModalShown" :todo="null" @closeModal="setShowModal" @updateTodo="updateTodo" />
         </template>

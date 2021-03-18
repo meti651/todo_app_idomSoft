@@ -6,7 +6,7 @@
                     <strong>{{day}}</strong>, {{date}}
                     <md-subheader>{{month}}</md-subheader>
                 </div>
-                <md-subheader>{{todos.length}} Tasks</md-subheader>
+                <md-subheader class="tasks-amount">{{todosLength}} Tasks</md-subheader>
             </md-card-header>
 
             <md-card-actions >
@@ -33,7 +33,7 @@
     export default {
         name: "DatedCard",
         props: {
-            todos: Array
+            todosLength: Number
         },
         data: () => ({
             dateObject: new Date(),

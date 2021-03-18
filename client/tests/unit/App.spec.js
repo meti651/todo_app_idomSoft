@@ -86,8 +86,8 @@ describe("App.vue ", () => {
         expect(wrapper.findComponent(TodoUpdate).exists()).toBe(true);
     })
 
-    test("gives the todos to DatedCard and TodoList", () => {
-        expect(wrapper.findComponent(DatedCard).props().todos).toEqual(dummyData);
+    test("gives the correct props to DatedCard and TodoList", () => {
+        expect(wrapper.findComponent(DatedCard).props().todosLength).toEqual(dummyData.length);
         expect(wrapper.findComponent(TodoList).props().todos).toEqual(dummyData);
     })
 })
