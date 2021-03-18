@@ -11,8 +11,8 @@
             <md-button md-menu-trigger ref="trigger"></md-button>
 
             <md-menu-content class="options">
-                <md-button @click="setShowUpdate(true)">Update</md-button>
-                <md-button @click="deleteTodo">Delete</md-button>
+                <md-button @click="setShowUpdate(true)" class="update-btn">Update</md-button>
+                <md-button @click="deleteTodo" class="delete-btn">Delete</md-button>
             </md-menu-content>
         </md-menu>
 
@@ -27,7 +27,7 @@ export default {
     name: "Todo",
     props: {
         todo: {
-            id: Number,
+            id: String,
             isDone: Boolean,
             description: String,
             time: String
@@ -45,7 +45,6 @@ export default {
     },
     methods: {
         handleContextMenu(e) {
-            
             const triggerBtn = this.$refs.trigger.$el;
 
             triggerBtn.click();          
