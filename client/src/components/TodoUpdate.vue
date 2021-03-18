@@ -1,6 +1,8 @@
 <template>
     <md-dialog :md-active.sync="isModalShown" :md-click-outside-to-close="false" :md-close-on-esc="false">
-        <md-dialog-title v-if="todo" >Update Todo, ID: <strong>{{todo.id}}</strong></md-dialog-title>
+        <md-dialog-title v-if="todo">
+            Update Todo, ID: <strong>{{ todo.id }}</strong>
+        </md-dialog-title>
         <md-dialog-title v-else>Create Todo</md-dialog-title>
 
         <form @submit.prevent="updateTodo" class="md-layout">
@@ -8,13 +10,25 @@
                 <md-card-content>
                     <md-field>
                         <label for="description">Description</label>
-                        <md-textarea name="description" v-model="description" required/>
+                        <md-textarea name="description" v-model="description" required />
                     </md-field>
                     <md-field>
                         <md-icon>event</md-icon>
                         <label for="time">Time</label>
-                        <md-input name="time" ref="timePickerInput" autocomplete="off" @focus="pickTime" v-model="time" class="md-accent"/>
-                        <vue-clock-picker v-model="time" ref="clockPicker" @timeset="setTime" active-color="#e57373"></vue-clock-picker>
+                        <md-input
+                            name="time"
+                            ref="timePickerInput"
+                            autocomplete="off"
+                            @focus="pickTime()"
+                            v-model="time"
+                            class="md-accent"
+                        />
+                        <vue-clock-picker
+                            v-model="time"
+                            ref="clockPicker"
+                            @timeset="setTime"
+                            active-color="#e57373"
+                        ></vue-clock-picker>
                     </md-field>
                     <md-card-actions>
                         <md-button class="md-accent" @click="closeModal">Cancel</md-button>
@@ -28,48 +42,53 @@
 </template>
 
 <script>
-
 export default {
     name: "TodoUpdate",
     props: {
         isModalShown: Boolean,
-        todo: Object
+        todo: Object,
     },
     data() {
         return {
-            time: this.todo ? this.todo.time : '00:00',
-            description: this.todo ? this.todo.description : '',
+            time: this.todo ? this.todo.time : "00:00",
+            description: this.todo ? this.todo.description : "",
+        };
+    },
+    watch: {
+        todo(){
+            this.time = this.todo ? this.todo.time : "00:00";
+            this.description = this.todo ? this.todo.description : "";
         }
     },
     methods: {
         closeModal() {
-            this.$emit('closeModal', false)
+            this.$emit("closeModal", false);
         },
         pickTime() {
             const timePicker = this.$refs.clockPicker;
 
-            timePicker.open();
+            if (timePicker) timePicker.open();
         },
-        setTime(time){
+        setTime(time) {
             this.time = time;
         },
-        updateTodo(){
+        updateTodo() {
             this.closeModal();
-            this.$emit("updateTodo", {description: this.description, time: this.time})
-        }
-    }
-}
+            this.$emit("updateTodo", { description: this.description, time: this.time });
+        },
+    },
+};
 </script>
 
 <style lang="scss">
-.clock-picker__input{
+.clock-picker__input {
     display: none;
 }
-.md-dialog-container{
+.md-dialog-container {
     min-height: 500px;
     min-width: 330px;
 
-    .md-textarea{
+    .md-textarea {
         height: 400px;
     }
 }
