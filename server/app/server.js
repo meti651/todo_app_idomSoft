@@ -68,6 +68,7 @@ module.exports = (host, port) => {
      *           description: A boolean wheter the todo is done or not
      */
     router.get("/api/todos", function (req, res) {
+        todos.sort((a, b) => a.time > b.time ? 1 : -1);
         res.status(200).json(todos);
     });
 

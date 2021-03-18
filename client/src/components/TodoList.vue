@@ -1,7 +1,7 @@
 <template>
     <div>
         <md-list>
-            <div v-for="todo, index in orderedTodos" :key="todo.id" :class="index % 2 === 0 && 'grayed'">
+            <div v-for="todo, index in todos" :key="todo.id" class="todo-container" :id="todo.id" :class="index % 2 === 0 && 'grayed'">
                 <Todo :todo="todo" @updateTodo="updateTodo" @deleteTodo="deleteTodo"/>
             </div>
         </md-list>
@@ -18,11 +18,6 @@ export default {
     },
     props: {
         todos: Array,
-    },
-    computed: {
-        orderedTodos() {
-            return this.todos.sort((a, b) => a.time > b.time ? 1 : -1)
-        }
     },
     methods: {
         updateTodo(todo){
