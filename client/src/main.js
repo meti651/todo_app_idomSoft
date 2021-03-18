@@ -10,7 +10,7 @@ import 'vue-material/dist/theme/default.css'
 Vue.use(VueMaterial)
 
 import '@pencilpix/vue2-clock-picker/dist/vue2-clock-picker.min.css';
-const VueClockPickerPlugin = require('@pencilpix/vue2-clock-picker/dist/vue2-clock-picker.plugin.js')
+import VueClockPickerPlugin from '@pencilpix/vue2-clock-picker/dist/vue2-clock-picker.plugin.js';
 Vue.use(VueClockPickerPlugin)
 
 
