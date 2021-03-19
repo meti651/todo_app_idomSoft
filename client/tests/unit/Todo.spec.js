@@ -5,6 +5,8 @@ import TodoUpdate from "@/components/TodoUpdate.vue";
 import VueMaterial from "vue-material";
 const localVue = createLocalVue();
 localVue.use(VueMaterial);
+import VueClockPickerPlugin from "@pencilpix/vue2-clock-picker/dist/vue2-clock-picker.plugin.js";
+localVue.use(VueClockPickerPlugin);
 
 const dummyData = {
     id: "1",
@@ -22,6 +24,9 @@ describe("Todo.vue ", () => {
             propsData: {
                 todo: dummyData,
             },
+            stubs: {
+                "TodoUpdate": TodoUpdate
+            }
         });
     });
 
@@ -64,6 +69,9 @@ describe("TodoList.vue interacts well with ", () => {
             propsData: {
                 todo: dummyData,
             },
+            stubs: {
+                "TodoUpdate": TodoUpdate
+            }
         });
     });
 

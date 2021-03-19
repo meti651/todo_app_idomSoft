@@ -1,4 +1,4 @@
-import { shallowMount } from "@vue/test-utils";
+import { shallowMount, createLocalVue } from "@vue/test-utils";
 import flushPromises from "flush-promises";
 
 import App from "@/App.vue";
@@ -41,6 +41,12 @@ jest.mock("@/dataFetch", () => {
     };
 });
 
+import VueMaterial from "vue-material";
+const localVue = createLocalVue();
+localVue.use(VueMaterial);
+import VueClockPickerPlugin from "@pencilpix/vue2-clock-picker/dist/vue2-clock-picker.plugin.js";
+localVue.use(VueClockPickerPlugin);
+
 const dummyData = [
     {
         id: "1",
@@ -66,7 +72,12 @@ describe("App.vue ", () => {
     let wrapper;
 
     beforeEach(async () => {
-        wrapper = shallowMount(App);
+        wrapper = shallowMount(App,{
+            localVue,
+            stubs: {
+                "TodoUpdate": TodoUpdate
+            }
+        });
         await flushPromises();
     });
 
@@ -97,7 +108,12 @@ describe("App.vue interacts well with", () => {
     let wrapper;
 
     beforeEach(async () => {
-        wrapper = shallowMount(App);
+        wrapper = shallowMount(App,{
+            localVue,
+            stubs: {
+                "TodoUpdate": TodoUpdate
+            }
+        });
         await flushPromises();
     });
 
