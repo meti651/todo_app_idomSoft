@@ -100,7 +100,6 @@ describe("TodoList.vue interacts well with ", () => {
 
     test("deleting todo", async () => {
         const deleteBtn = wrapper.find(".delete-btn");
-        console.log(deleteBtn.html());
         deleteBtn.vm.$emit("click");
         await wrapper.vm.$nextTick();
 
