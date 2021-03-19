@@ -1,7 +1,7 @@
 <template>
     <div class="list-item-container" ref="container">
         <md-list-item @contextmenu.prevent="handleContextMenu">
-            <md-checkbox v-model="isDone" class="md-primary" />
+            <md-checkbox v-model="isDone" class="md-primary" @change="updateTodo"/>
             <span class="md-list-item-text" :class="isDone ? 'done' : ''">{{ todo.description }}</span>
             <md-subheader>{{ time }} {{ timeOfDay }}</md-subheader>
         </md-list-item>
@@ -59,8 +59,8 @@ export default {
         updateTodo(todo) {
             this.$emit("updateTodo", {
                 isDone: this.isDone,
-                description: todo.description,
-                time: todo.time,
+                description: todo.description || this.todo.description,
+                time: todo.time || this.todo.time,
                 id: this.todo.id,
             });
         },
