@@ -2,18 +2,14 @@ import axios from "axios";
 
 const dataFetch = {
     async dataFetch(url, options = {}) {
-        const res = await axios(url, options);
-
-        if (!res.ok) {
-            const message = ```
-                An error has occured: ${res.status}
-                ${res.text}
-                ```;
+        let res;
+        try{
+            res = await axios(url, options);
+        }catch(err){
+            const message = `An error has occured: ${res.status}: ${res.message}`;
             throw new Error(message);
         }
-
-        const data = await res.json();
-        return data;
+        return res.data;
     },
     getAllTodos() {
         return this.dataFetch(dataUrls.base, {
@@ -37,7 +33,7 @@ const dataFetch = {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(todo),
+            data: todo,
         });
     },
     updateTodo(todo) {
@@ -48,7 +44,7 @@ const dataFetch = {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(todo),
+            data: todo,
         });
     },
     deleteTodo(todoId) {
@@ -61,7 +57,7 @@ const dataFetch = {
 };
 
 const dataUrls = {
-    base: "http://localhost:8080/api/todos/",
+    base: "/api/todos/",
     withId(todoId) {
         return this.base + todoId;
     },
