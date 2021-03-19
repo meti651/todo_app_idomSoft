@@ -12,7 +12,6 @@
 <script>
 import DatedCard from "./components/DatedCard";
 import TodoList from "./components/TodoList";
-import TodoUpdate from "./components/TodoUpdate";
 
 import dataFetch from "./dataFetch";
 
@@ -23,7 +22,7 @@ export default {
     components: {
         DatedCard,
         TodoList,
-        TodoUpdate,
+        TodoUpdate: () => import("./components/TodoUpdate").then(component => component),
     },
     data: () => ({
         todos: [],

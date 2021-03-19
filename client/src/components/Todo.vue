@@ -21,8 +21,6 @@
 </template>
 
 <script>
-import TodoUpdate from "./TodoUpdate";
-
 export default {
     name: "Todo",
     props: {
@@ -34,7 +32,7 @@ export default {
         },
     },
     components: {
-        TodoUpdate,
+        TodoUpdate: () => import("./TodoUpdate"),
     },
     data() {
         return {
