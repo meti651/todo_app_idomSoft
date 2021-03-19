@@ -4,17 +4,10 @@
   "description": "IdomSoft teszt feladat",
   "scripts": {
     "preinstall": "cd client && npm i && cd ../server && npm i && cd ..",
-    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "start": "node server",
     "build": "cd client && npm run build",
-    "client": "cd client && npm start",
-    "server": "node server"
+    "client": "cd client && npm start"
   },
   "author": "IdomSoft Zrt. <hr@idomsoft.hu>",
-  "license": "ISC",
-  "dependencies": {
-    "concurrently": "^6.0.0"
-  },
-  "devDependencies": {
-    "swagger-jsdoc": "^6.0.9"
-  }
+  "license": "ISC"
 }

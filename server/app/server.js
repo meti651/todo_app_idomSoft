@@ -34,10 +34,6 @@ module.exports = (host, port) => {
     );
     router.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerJsDoc));
 
-    router.get("/", function (req, res) {
-        res.status(200).send("If you want to learn about the API, go to the <a href='/docs'>docs</a>");
-    })
-
     /**
      * @openapi
      * /api/todos:
@@ -110,7 +106,7 @@ module.exports = (host, port) => {
      *      description: Bad request. There is no todo with the requested ID
      */
     router.get("/api/todos/:todoId", function (req, res) {
-        const todo = todos.filter(todo => todo.id === req.params.todoId).shift();
+        const todo = todos.filter(item => item.id === req.params.todoId).shift();
         if(!todo) res.status(400).send(`There is no todo with the id: ${req.params.todoId}`);
         else res.status(200).json(todo);
     });
@@ -173,10 +169,13 @@ module.exports = (host, port) => {
      *      description: Bad request. There is already a todo with the requested ID.
      */
     router.post("/api/todos/:todoId", function (req, res) {
-        let todo = todos.filter(todo => todo.id === req.params.todoId).shift();
+        let todo = todos.filter(item => item.id === req.params.todoId).shift();
         if(todo) {
             res.status(400).send(`There is already a todo with the id: ${todo.id}`)
             return;
+        }
+        if(Object.keys(req.body).length === 0){
+            res.status(400).send("There is no properties in the request body");
         }
         todo = {...req.body};
         todos.push(todo);
@@ -221,7 +220,7 @@ module.exports = (host, port) => {
      *      description: Bad request. There is no todo with the requested ID.
      */
     router.patch("/api/todos/:todoId", function (req, res) {
-        let todo = todos.filter(todo => todo.id === req.params.todoId).shift();
+        let todo = todos.filter(item => item.id === req.params.todoId).shift();
         if(!todo) {
             res.status(400).send(`There is no todo with the id: ${req.params.todoId}`);
             return;
@@ -270,12 +269,12 @@ module.exports = (host, port) => {
      *      description: Bad request. There is no todo with the requested ID.
      */
     router.delete("/api/todos/:todoId", function (req, res) {
-        let todo = todos.filter(todo => todo.id === req.params.todoId).shift();
+        let todo = todos.filter(item => item.id === req.params.todoId).shift();
         if(!todo){
             res.status(400).send(`There is no todo with the id: ${req.params.todoId}`);
             return;
         }
-        todos = todos.filter(todo => todo.id !== req.params.todoId);
+        todos = todos.filter(item => item.id !== req.params.todoId);
         res.status(202).json(todo);
     });
 
